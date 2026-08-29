@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservas - Don Limón Restaurante</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="portada.html">Don Limón Restaurante</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="portada.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="carta.html">Nuestra Carta</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="reservas.html">Reservas</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-5 mb-5">
+        <!-- Integrante 5: Formularios form-floating -->
+        <section class="row">
+            <div class="col-md-6 mx-auto card p-4 shadow">
+                <h3 class="text-center mb-4">Separa tu mesa</h3>
+                <form class="needs-validation">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="inputNombre" placeholder="Tu Nombre">
+                        <label for="inputNombre">Nombre Completo</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="inputEmail" placeholder="correo@ejemplo.com">
+                        <label for="inputEmail">Correo Electrónico</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="inputFecha" placeholder="Fecha">
+                        <label for="inputFecha">Fecha de Reserva</label>
+                    </div>
+                    <div class="mb-4">
+                        <label for="personas" class="form-label text-muted small">Número de Comensales</label>
+                        <select class="form-select" id="personas">
+                            <option value="1">1 a 2 personas</option>
+                            <option value="2">3 a 5 personas</option>
+                            <option value="3">Mesa familiar (6+)</option>
+                        </select>
+                    </div>
+                    <!-- Disparador del Modal -->
+                    <button type="button" class="btn btn-success w-100 btn-lg" data-bs-toggle="modal"
+                        data-bs-target="#modalConfirmacion">
+                        Confirmar Reserva
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
+        <p class="mb-0">&copy; 2026 Don Limón Restaurante.</p>
+    </footer>
+
+    <!-- Integrante 5: Ventana Modal de Confirmación -->
+    <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-success">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">¡Reserva Pre-aprobada!</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <p class="fs-5">Hemos registrado tus datos en el sistema.</p>
+                    <p class="text-muted small">Por favor, acércate al local en Av. Panamericana 608, Urb. Santa Rosa,
+                        Sullana, 15 minutos antes de tu horario pactado para mantener la reserva. Cualquier consulta,
+                        llámanos al +51 943 617 874.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Entendido</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
