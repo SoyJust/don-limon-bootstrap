@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -13,15 +13,15 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="portada.html">Don Limón Restaurante</a>
+                <a class="navbar-brand" th:href="@{/}">Don Limón Restaurante</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" href="portada.html">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="carta.html">Nuestra Carta</a></li>
-                        <li class="nav-item"><a class="nav-link" href="reservas.html">Reservas</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/}">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link active" th:href="@{/carta}">Nuestra Carta</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/reservas}">Reservas</a></li>
                     </ul>
                 </div>
             </div>
@@ -35,7 +35,7 @@
         <section class="row mb-5">
             <div class="col-md-4 col-sm-12 mb-4">
                 <div class="card h-100 shadow-sm">
-                    <img src="images/ceviche-clasico.jpg" class="card-img-top img-fluid" alt="Ceviche Clásico">
+                    <img th:src="@{/images/ceviche-clasico.jpg}" class="card-img-top img-fluid" alt="Ceviche Clásico">
                     <div class="card-body text-center">
                         <h5 class="card-title fw-bold">Ceviche Clásico</h5>
                         <p class="card-text text-muted">Pescado fresco marinado en limón con ají amarillo y cebolla
@@ -45,7 +45,7 @@
             </div>
             <div class="col-md-4 col-sm-12 mb-4">
                 <div class="card h-100 shadow-sm">
-                    <img src="images/chicharron-mariscos.jpg" class="card-img-top img-fluid"
+                    <img th:src="@{/images/chicharron-mariscos.jpg}" class="card-img-top img-fluid"
                         alt="Chicharrón de Mariscos">
                     <div class="card-body text-center">
                         <h5 class="card-title fw-bold">Chicharrón de Mariscos</h5>
@@ -55,7 +55,7 @@
             </div>
             <div class="col-md-4 col-sm-12 mb-4">
                 <div class="card h-100 shadow-sm">
-                    <img src="images/sudado-pescado.jpg" class="card-img-top img-fluid" alt="Sudado de Pescado">
+                    <img th:src="@{/images/sudado-pescado.jpg}" class="card-img-top img-fluid" alt="Sudado de Pescado">
                     <div class="card-body text-center">
                         <h5 class="card-title fw-bold">Sudado de Pescado</h5>
                         <p class="card-text text-muted">Pescado fresco en salsa criolla con yuca y arroz blanco.</p>
@@ -64,11 +64,16 @@
             </div>
         </section>
 
-        <!-- Integrante 4: Tabla de Combos -->
+        <!-- Integrante 4: Tabla de Combos (dinámica, ver PaginaController) -->
         <section class="row mb-5">
             <div class="col-md-8 mx-auto">
                 <h3 class="text-center mb-3">Resto de la Carta</h3>
-                <div class="table-responsive">
+
+                <p class="text-center text-muted" th:if="${#lists.isEmpty(platos)}">
+                    No hay platos disponibles por el momento.
+                </p>
+
+                <div class="table-responsive" th:unless="${#lists.isEmpty(platos)}">
                     <table class="table table-hover table-bordered text-center align-middle">
                         <thead class="table-dark">
                             <tr>
@@ -78,45 +83,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="fw-bold">Conchas Negras</td>
-                                <td>Conchas negras al natural con limón y salsa criolla.</td>
-                                <td class="text-success fw-bold">S/ 28.00</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Leche de Tigre</td>
-                                <td>Jugo cítrico de ceviche con trozos de pescado, ají y cebolla.</td>
-                                <td class="text-success fw-bold">S/ 12.00</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Ceviche Mixto</td>
-                                <td>Mezcla de pescado, mariscos y conchas marinados en limón.</td>
-                                <td class="text-success fw-bold">S/ 30.00</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Arroz con Mariscos</td>
-                                <td>Arroz cremoso con mariscos frescos y salsa especial de la casa.</td>
-                                <td class="text-success fw-bold">S/ 35.00</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Seco de Chabelo</td>
-                                <td>Plato norteño típico de Piura: carne seca guisada con yuca frita.</td>
-                                <td class="text-success fw-bold">S/ 28.00</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Parihuela</td>
-                                <td>Sopa marina espesa con mariscos, pescado fresco y ají panca.</td>
-                                <td class="text-success fw-bold">S/ 32.00</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Chicha Morada</td>
-                                <td>Bebida tradicional peruana de maíz morado con frutas y canela.</td>
-                                <td class="text-success fw-bold">S/ 8.00</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">Limonada</td>
-                                <td>Limonada natural con menta y hierbabuena, preparada al momento.</td>
-                                <td class="text-success fw-bold">S/ 7.00</td>
+                            <tr th:each="p : ${platos}">
+                                <td class="fw-bold" th:text="${p.nombre}"></td>
+                                <td th:text="${p.descripcion}"></td>
+                                <td class="text-success fw-bold" th:text="'S/ ' + ${p.precio}"></td>
                             </tr>
                         </tbody>
                     </table>

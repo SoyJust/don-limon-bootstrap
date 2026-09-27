@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -15,15 +15,15 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="portada.html">Don Limón Restaurante</a>
+                <a class="navbar-brand" th:href="@{/}">Don Limón Restaurante</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link active" href="portada.html">Inicio</a></li>
-                         <li class="nav-item"><a class="nav-link" href="carta.html">Nuestra Carta</a></li>
-                        <li class="nav-item"><a class="nav-link" href="reservas.html">Reservas</a></li>
+                        <li class="nav-item"><a class="nav-link active" th:href="@{/}">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/carta}">Nuestra Carta</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/reservas}">Reservas</a></li>
                     </ul>
                 </div>
             </div>
@@ -38,10 +38,13 @@
                 <p class="lead">Especialidad en comida criolla, pescados y mariscos. Restaurante familiar en
                     Av. Panamericana 608, Urb. Santa Rosa, Sullana - Piura, con más de 2,700 reseñas y una
                     valoración de 4.1/5.</p>
-                <a href="carta.html" class="btn btn-primary btn-lg mt-3">Ver Nuestra Carta</a>
+                <p class="text-muted" th:if="${totalPlatos > 0}">
+                    Descubre nuestros <span th:text="${totalPlatos}"></span> platos disponibles en la carta.
+                </p>
+                <a th:href="@{/carta}" class="btn btn-primary btn-lg mt-3">Ver Nuestra Carta</a>
             </div>
             <div class="col-md-6 col-sm-12 mt-4 mt-md-0">
-                <img src="images/restaurante.jpg" class="img-fluid rounded shadow"
+                <img th:src="@{/images/restaurante.jpg}" class="img-fluid rounded shadow"
                     alt="Fachada de Don Limón Restaurante">
             </div>
         </section>
