@@ -1,0 +1,196 @@
+:root {
+    --verde: #1f8a3b;
+    --verde-oscuro: #0f3d22;
+    --limon: #d4e157;
+    --crema: #fbf8ef;
+    --texto: #23302a;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    color: var(--texto);
+    background: var(--crema);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main { flex: 1; }
+
+h1, h2, h3, .navbar-brand, .titulo-serif {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+}
+
+/* ---------- Navbar ---------- */
+.navbar-don {
+    background: var(--verde-oscuro);
+    border-bottom: 3px solid var(--limon);
+    padding: .75rem 0;
+}
+.navbar-don .navbar-brand { color: #fff; font-size: 1.4rem; font-weight: 700; }
+.navbar-don .navbar-brand span { color: var(--limon); }
+.navbar-don .nav-link {
+    color: rgba(255, 255, 255, .8);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-size: .8rem;
+    font-weight: 600;
+    margin-left: .75rem;
+    border-bottom: 2px solid transparent;
+}
+.navbar-don .nav-link:hover { color: #fff; }
+.navbar-don .nav-link.active { color: var(--limon); border-bottom-color: var(--limon); }
+
+/* ---------- Botones ---------- */
+.btn-don {
+    background: var(--limon);
+    color: var(--verde-oscuro);
+    font-weight: 700;
+    border: 0;
+    border-radius: 50rem;
+    padding: .75rem 1.75rem;
+    transition: transform .15s, box-shadow .15s;
+}
+.btn-don:hover { background: #e2ec7a; color: var(--verde-oscuro); transform: translateY(-2px); box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .2); }
+.btn-borde {
+    border: 2px solid #fff;
+    color: #fff;
+    border-radius: 50rem;
+    padding: .65rem 1.75rem;
+    font-weight: 600;
+}
+.btn-borde:hover { background: #fff; color: var(--verde-oscuro); }
+.btn-reservar {
+    background: var(--verde);
+    border: 0;
+    color: #fff;
+    font-weight: 700;
+    border-radius: .75rem;
+    padding: .9rem;
+}
+.btn-reservar:hover { background: var(--verde-oscuro); color: #fff; }
+
+/* ---------- Portada ---------- */
+.hero {
+    position: relative;
+    min-height: 78vh;
+    padding: 4.5rem 0 7rem;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    background:
+        linear-gradient(100deg, rgba(10, 40, 22, .92) 0%, rgba(10, 40, 22, .65) 55%, rgba(10, 40, 22, .25) 100%),
+        url('../images/restaurante.jpg') center / cover no-repeat;
+}
+.hero .etiqueta {
+    display: inline-block;
+    background: rgba(212, 225, 87, .18);
+    color: var(--limon);
+    border: 1px solid var(--limon);
+    border-radius: 50rem;
+    padding: .3rem .9rem;
+    font-size: .8rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+}
+.hero h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 700; line-height: 1.05; }
+.hero h1 em { color: var(--limon); font-style: normal; }
+.hero p.lead { max-width: 36rem; color: rgba(255, 255, 255, .88); margin: 1.25rem 0 2rem; }
+
+.franja-info { margin-top: -3rem; position: relative; z-index: 2; }
+.dato {
+    background: #fff;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    height: 100%;
+    box-shadow: 0 .75rem 1.75rem rgba(15, 61, 34, .12);
+    border-top: 4px solid var(--verde);
+}
+.dato .valor { font-family: 'Playfair Display', Georgia, serif; font-size: 1.5rem; font-weight: 700; color: var(--verde-oscuro); }
+.dato .rotulo { font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: #6b7a72; margin-bottom: .35rem; }
+
+/* ---------- Encabezados de página ---------- */
+.banda-titulo {
+    background: linear-gradient(120deg, var(--verde-oscuro), var(--verde));
+    color: #fff;
+    text-align: center;
+    padding: 3.5rem 1rem;
+}
+.banda-titulo h1 { font-weight: 700; margin-bottom: .5rem; }
+.banda-titulo p { color: rgba(255, 255, 255, .85); margin: 0; }
+
+/* ---------- Carta ---------- */
+.plato-card {
+    border: 0;
+    border-radius: 1.1rem;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 .5rem 1.25rem rgba(15, 61, 34, .1);
+    transition: transform .2s, box-shadow .2s;
+}
+.plato-card:hover { transform: translateY(-6px); box-shadow: 0 1.25rem 2rem rgba(15, 61, 34, .18); }
+.plato-card img { aspect-ratio: 1 / 1; object-fit: cover; }
+.plato-card .card-title { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; color: var(--verde-oscuro); }
+
+.titulo-seccion { text-align: center; margin-bottom: 2rem; }
+.titulo-seccion h2 { font-weight: 700; color: var(--verde-oscuro); }
+.titulo-seccion .linea { width: 70px; height: 4px; background: var(--limon); margin: .75rem auto 0; border-radius: 4px; }
+
+.tabla-carta {
+    background: #fff;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 .5rem 1.25rem rgba(15, 61, 34, .1);
+}
+.tabla-carta table { margin: 0; }
+.tabla-carta thead th {
+    background: var(--verde-oscuro);
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-size: .75rem;
+    border: 0;
+    padding: 1rem;
+}
+.tabla-carta td { padding: 1rem; vertical-align: middle; border-color: #eef1ec; }
+.tabla-carta .precio { font-weight: 700; color: var(--verde); white-space: nowrap; }
+.badge-cat {
+    background: #eef6d1;
+    color: var(--verde-oscuro);
+    border-radius: 50rem;
+    padding: .25rem .75rem;
+    font-size: .75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* ---------- Reservas ---------- */
+.panel-info {
+    background: var(--verde-oscuro);
+    color: #fff;
+    border-radius: 1.25rem;
+    padding: 2.25rem;
+    height: 100%;
+}
+.panel-info h3 { color: var(--limon); font-weight: 700; }
+.panel-info .item { margin-top: 1.5rem; }
+.panel-info .item small { display: block; text-transform: uppercase; letter-spacing: .1em; color: rgba(255, 255, 255, .6); font-size: .7rem; }
+.form-reserva {
+    background: #fff;
+    border-radius: 1.25rem;
+    padding: 2.25rem;
+    box-shadow: 0 .75rem 1.75rem rgba(15, 61, 34, .12);
+}
+.form-reserva .form-control { border-radius: .75rem; }
+.form-reserva .form-control:focus { border-color: var(--verde); box-shadow: 0 0 0 .2rem rgba(31, 138, 59, .2); }
+
+/* ---------- Footer ---------- */
+.footer-don { background: var(--verde-oscuro); color: rgba(255, 255, 255, .85); text-align: center; padding: 1.5rem 1rem; margin-top: 4rem; border-top: 3px solid var(--limon); }
+.footer-don strong { color: var(--limon); }
+
+/* ---------- Logo y footer ampliado ---------- */
+.logo-nav { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; border: 2px solid var(--limon); }
+.footer-don h6 { color: var(--limon); text-transform: uppercase; letter-spacing: .1em; font-size: .8rem; margin-bottom: .75rem; }
+.footer-don .equipo li { margin-bottom: .2rem; font-size: .9rem; }
+.footer-linea { border-color: rgba(255, 255, 255, .2); margin: 1.5rem 0 1rem; }

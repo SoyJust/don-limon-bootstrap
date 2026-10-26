@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrar carta - Don Limón Restaurante</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" th:href="@{/images/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/estilo.css}">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-don">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center gap-2" th:href="@{/}">
+                    <img th:src="@{/images/logo.png}" alt="Logo Don Limón" class="logo-nav">
+                    <span>Don <span>Limón</span></span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" th:href="@{/}">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/carta}">Nuestra Carta</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/reservas}">Reservas</a></li>
+                        <li class="nav-item"><a class="nav-link active" th:href="@{/admin/carta}">Administrar carta</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="banda-titulo">
+            <h1>Administrar carta</h1>
+            <p>Agrega, edita o elimina platos. Los cambios se guardan en la base de datos.</p>
+        </section>
+
+        <div class="container mt-5">
+            <div class="alert alert-success" th:if="${ok}">Los cambios se guardaron correctamente.</div>
+
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="form-reserva">
+                        <h3 class="mb-4 titulo-serif" th:text="${plato.idPlato == null} ? 'Agregar plato' : 'Editar plato'">Agregar plato</h3>
+                        <form th:action="@{/admin/carta/guardar}" th:object="${plato}" method="post" novalidate>
+                            <input type="hidden" th:field="*{idPlato}">
+
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="nombre" th:field="*{nombre}" placeholder="Nombre"
+                                    th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'">
+                                <label for="nombre">Nombre del plato</label>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="descripcion" th:field="*{descripcion}" placeholder="Descripción"
+                                    th:classappend="${#fields.hasErrors('descripcion')} ? 'is-invalid'">
+                                <label for="descripcion">Descripción</label>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="number" step="0.01" class="form-control" id="precio" th:field="*{precio}" placeholder="Precio"
+                                    th:classappend="${#fields.hasErrors('precio')} ? 'is-invalid'">
+                                <label for="precio">Precio (S/)</label>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}"></div>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="categoria" th:field="*{categoria.idCategoria}"
+                                    th:classappend="${#fields.hasErrors('categoria.idCategoria')} ? 'is-invalid'">
+                                    <option value="">Selecciona una categoría</option>
+                                    <option th:each="c : ${categorias}" th:value="${c.idCategoria}" th:text="${c.nombre}"></option>
+                                </select>
+                                <label for="categoria">Categoría</label>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('categoria.idCategoria')}" th:errors="*{categoria.idCategoria}"></div>
+                            </div>
+
+                            <button type="submit" class="btn btn-reservar w-100"
+                                th:text="${plato.idPlato == null} ? 'Guardar plato' : 'Actualizar plato'">Guardar plato</button>
+                            <a th:if="${plato.idPlato != null}" th:href="@{/admin/carta}" class="btn btn-link w-100 mt-2">Cancelar edición</a>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+                    <p class="text-center text-muted" th:if="${#lists.isEmpty(platos)}">No hay platos registrados.</p>
+                    <div class="tabla-carta table-responsive" th:unless="${#lists.isEmpty(platos)}">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Plato</th>
+                                    <th>Categoría</th>
+                                    <th class="text-end">Precio</th>
+                                    <th class="text-end">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="p : ${platos}">
+                                    <td th:text="${p.idPlato}"></td>
+                                    <td class="fw-bold" th:text="${p.nombre}"></td>
+                                    <td><span class="badge-cat" th:text="${p.categoria.nombre}"></span></td>
+                                    <td class="precio text-end" th:text="'S/ ' + ${#numbers.formatDecimal(p.precio, 1, 2)}"></td>
+                                    <td class="text-end text-nowrap">
+                                        <a class="btn btn-sm btn-outline-success" th:href="@{/admin/carta(editar=${p.idPlato})}">Editar</a>
+                                        <form class="d-inline" th:action="@{/admin/carta/eliminar/{id}(id=${p.idPlato})}" method="post"
+                                            onsubmit="return confirm('¿Eliminar este plato?');">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-don">
+        <div class="container">
+            <div class="row g-4 text-start">
+                <div class="col-md-4">
+                    <h6>Don Limón Restaurante</h6>
+                    <p class="mb-1">Av. Panamericana 608, Urb. Santa Rosa, Sullana - Piura</p>
+                    <p class="mb-0">+51 943 617 874</p>
+                </div>
+                <div class="col-md-5">
+                    <h6>Equipo de desarrollo</h6>
+                    <ul class="list-unstyled mb-0 equipo">
+                        <li>Juspin Edu Otero Saldarriaga</li>
+                        <li>Leonel Ivan Moscoso Vargas</li>
+                        <li>Loconi Garcia Willy Jesus</li>
+                        <li>Manuel Ruiz Joly Adrian</li>
+                        <li>Maticorena Torres Mathews</li>
+                        <li>Olaya Rondoy Grabiel</li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>Curso</h6>
+                    <p class="mb-1">Marco de Desarrollo Web</p>
+                    <p class="mb-1">Universidad Tecnológica del Perú</p>
+                    <p class="mb-0">Docente: Dr. Ing. Iván Michell Castillo Jiménez</p>
+                </div>
+            </div>
+            <hr class="footer-linea">
+            <p class="mb-0 small text-center">&copy; 2026 Don Limón Restaurante. Todos los derechos reservados. Proyecto académico UTP.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -6,65 +6,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservas - Don Limón Restaurante</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" th:href="@{/images/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/estilo.css}">
 </head>
 
 <body>
 
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" th:href="@{/}">Don Limón Restaurante</a>
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-don">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center gap-2" th:href="@{/}">
+                    <img th:src="@{/images/logo.png}" alt="Logo Don Limón" class="logo-nav">
+                    <span>Don <span>Limón</span></span>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item"><a class="nav-link" th:href="@{/}">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link" th:href="@{/carta}">Nuestra Carta</a></li>
                         <li class="nav-item"><a class="nav-link active" th:href="@{/reservas}">Reservas</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/admin/carta}">Administrar carta</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main class="container mt-5 mb-5">
-        <!-- Integrante 5: Formularios form-floating -->
-        <section class="row">
-            <div class="col-md-6 mx-auto card p-4 shadow">
-                <h3 class="text-center mb-4">Separa tu mesa</h3>
-                <form th:action="@{/reservas/guardar}" th:object="${reserva}" method="post">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="inputNombre" th:field="*{nombre}" placeholder="Tu Nombre" required>
-                        <label for="inputNombre">Nombre Completo</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="inputEmail" th:field="*{email}" placeholder="correo@ejemplo.com" required>
-                        <label for="inputEmail">Correo Electrónico</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="date" class="form-control" id="inputFecha" th:field="*{fecha}" required>
-                        <label for="inputFecha">Fecha de Reserva</label>
-                    </div>
-                    <div class="mb-4">
-                        <label for="personas" class="form-label text-muted small">Número de Comensales</label>
-                        <select class="form-select" id="personas" th:field="*{comensales}">
-                            <option value="1">1 a 2 personas</option>
-                            <option value="2">3 a 5 personas</option>
-                            <option value="3">Mesa familiar (6+)</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-success w-100 btn-lg">
-                        Confirmar Reserva
-                    </button>
-                </form>
-            </div>
+    <main>
+        <section class="banda-titulo">
+            <h1>Reserva tu mesa</h1>
+            <p>Separa tu lugar en línea, sin llamadas ni esperas</p>
         </section>
-    </main>
 
-    <footer class="bg-dark text-white text-center py-3 mt-auto">
-        <p class="mb-0">&copy; 2026 Don Limón Restaurante.</p>
-    </footer>
+        <div class="container mt-5">
+            <section class="row g-4">
+                <div class="col-lg-5">
+                    <div class="panel-info">
+                        <h3>Antes de venir</h3>
+                        <div class="item">
+                            <small>Dirección</small>
+                            Av. Panamericana 608, Urb. Santa Rosa, Sullana
+                        </div>
+                        <div class="item">
+                            <small>Teléfono</small>
+                            +51 943 617 874
+                        </div>
+                        <div class="item">
+                            <small>Importante</small>
+                            Acércate al local 15 minutos antes de tu horario para mantener la reserva.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <!-- Integrante 5: Formularios form-floating -->
+                    <div class="form-reserva">
+                        <h3 class="mb-4 titulo-serif">Separa tu mesa</h3>
+                        <form th:action="@{/reservas/guardar}" th:object="${reserva}" method="post" novalidate>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="inputNombre" th:field="*{nombre}" placeholder="Tu Nombre"
+                                th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'">
+                            <label for="inputNombre">Nombre Completo</label>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="inputEmail" th:field="*{email}" placeholder="correo@ejemplo.com"
+                                th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
+                            <label for="inputEmail">Correo Electrónico</label>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="date" class="form-control" id="inputFecha" th:field="*{fecha}" placeholder="Fecha"
+                                th:classappend="${#fields.hasErrors('fecha')} ? 'is-invalid'">
+                            <label for="inputFecha">Fecha de Reserva</label>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('fecha')}" th:errors="*{fecha}"></div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="inputComensales" th:field="*{comensales}" placeholder="Número de comensales"
+                                th:classappend="${#fields.hasErrors('comensales')} ? 'is-invalid'">
+                            <label for="inputComensales">Número de Comensales</label>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('comensales')}" th:errors="*{comensales}"></div>
+                        </div>
+                            <button type="submit" class="btn btn-reservar w-100 btn-lg mt-2">
+                                Confirmar Reserva
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
 
     <!-- Integrante 6: Ventana Modal de Confirmación -->
     <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-hidden="true">
@@ -87,6 +120,37 @@
             </div>
         </div>
     </div>
+
+    <footer class="footer-don">
+        <div class="container">
+            <div class="row g-4 text-start">
+                <div class="col-md-4">
+                    <h6>Don Limón Restaurante</h6>
+                    <p class="mb-1">Av. Panamericana 608, Urb. Santa Rosa, Sullana - Piura</p>
+                    <p class="mb-0">+51 943 617 874</p>
+                </div>
+                <div class="col-md-5">
+                    <h6>Equipo de desarrollo</h6>
+                    <ul class="list-unstyled mb-0 equipo">
+                        <li>Juspin Edu Otero Saldarriaga</li>
+                        <li>Leonel Ivan Moscoso Vargas</li>
+                        <li>Loconi Garcia Willy Jesus</li>
+                        <li>Manuel Ruiz Joly Adrian</li>
+                        <li>Maticorena Torres Mathews</li>
+                        <li>Olaya Rondoy Grabiel</li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>Curso</h6>
+                    <p class="mb-1">Marco de Desarrollo Web</p>
+                    <p class="mb-1">Universidad Tecnológica del Perú</p>
+                    <p class="mb-0">Docente: Dr. Ing. Iván Michell Castillo Jiménez</p>
+                </div>
+            </div>
+            <hr class="footer-linea">
+            <p class="mb-0 small text-center">&copy; 2026 Don Limón Restaurante. Todos los derechos reservados. Proyecto académico UTP.</p>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script th:if="${reservaConfirmada}">
